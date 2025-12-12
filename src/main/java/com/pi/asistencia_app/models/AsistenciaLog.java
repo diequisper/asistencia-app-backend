@@ -8,9 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "justificacion")
+@Table(name = "log_asistencia")
 public class AsistenciaLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,11 +41,14 @@ public class AsistenciaLog {
         ACTUALIZACIÓN,
         ELIMINACIÓN
     }
-    @NotBlank(message = "El campo para acción es requerido")
     private Accion accion;
 
-    @Size(max = 200, message = "El campo para resultado no puede exceder los 200 caracteres")
     private String resultado;
 
     private LocalDateTime fecha;
+
+    @PrePersist
+    protected void onCreate() {
+        this.fecha = LocalDateTime.now();
+    }  
 }

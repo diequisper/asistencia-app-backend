@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,9 +31,7 @@ public class Asistencia {
     @JoinColumn(name = "usuario")
     private Usuario usuario;
 
-    @PastOrPresent(message = "La fecha de entrada no puede estar adelantada al dia de hoy")
     private LocalDateTime entrada;
 
-    @PastOrPresent(message = "La fecha de salida no puede estar adelantada al dia de hoy")
     private LocalDateTime salida;
 }

@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,7 +43,6 @@ public class Justificacion {
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
 
-    @Size(max = 200, message = "El campo para motivo no puede exceder los 200 caracteres")
     private String motivo;
 
     public enum Estado{
