@@ -9,6 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedStoredProcedureQueries;
+import jakarta.persistence.NamedStoredProcedureQuery;
+import jakarta.persistence.ParameterMode;
+import jakarta.persistence.StoredProcedureParameter;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +27,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @Table(name = "justificacion")
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
+        name = "Justificacion.registrar",
+        procedureName = "PKG_JUSTIFICACION.SP_REGJUS",
+        parameters = {
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_usuario", type = Long.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_fecha", type = LocalDate.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_tipo", type = String.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_motivo", type = String.class)
+        }
+    )
+})
 public class Justificacion {
 
     @Id

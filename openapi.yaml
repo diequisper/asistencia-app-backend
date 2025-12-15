@@ -1,0 +1,159 @@
+openapi: 3.1.0
+info:
+  title: Task Management API
+  version: 1.0.0
+  description: API para gestión de estados, tareas y detalles de tareas
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /api/states:
+    get:
+      summary: Obtener todos los estados
+      responses:
+        '200':
+          description: Lista de estados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/State'
+    post:
+      summary: Crear un nuevo estado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/State'
+      responses:
+        '201':
+          description: Estado creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/State'
+
+  /api/tasks:
+    get:
+      summary: Obtener todas las tareas
+      responses:
+        '200':
+          description: Lista de tareas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+    post:
+      summary: Crear una nueva tarea
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        '201':
+          description: Tarea creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+
+  /api/tasks/{id_task}/details:
+    get:
+      summary: Obtener detalles de una tarea
+      parameters:
+        - in: path
+          name: id_task
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista de detalles de la tarea
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DetailTask'
+    post:
+      summary: Crear un detalle para una tarea
+      parameters:
+        - in: path
+          name: id_task
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DetailTask'
+      responses:
+        '201':
+          description: Detalle creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailTask'
+
+components:
+  schemas:
+    State:
+      type: object
+      properties:
+        id_state:
+          type: integer
+        state_description:
+          type: string
+        state_comment:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+
+    Task:
+      type: object
+      properties:
+        id_task:
+          type: integer
+        task_title:
+          type: string
+        task_description:
+          type: string
+        id_state:
+          type: integer
+        user_id:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    DetailTask:
+      type: object
+      properties:
+        id_detail_task:
+          type: integer
+        comment_detail_task:
+          type: string
+        id_task:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time

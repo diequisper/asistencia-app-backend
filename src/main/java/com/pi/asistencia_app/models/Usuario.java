@@ -7,6 +7,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedStoredProcedureQueries;
+import jakarta.persistence.NamedStoredProcedureQuery;
+import jakarta.persistence.ParameterMode;
+import jakarta.persistence.StoredProcedureParameter;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +25,19 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @Table(name = "usuario")
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
+        name = "Usuario.registrar",
+        procedureName = "PKG_USUARIO.SP_REGUS",
+        parameters = {
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_username", type = String.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_passwd", type = String.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_rol", type = String.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_activo", type = Integer.class)
+        }
+    )
+
+})
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
